@@ -8,9 +8,9 @@ const pdf2table = require("pdf2table");
 const ExcelJS = require("exceljs");
 const cors = require("cors");
 const { extractFile } = require("./extractor");
+
 const app = express();
-const PORT = process.env.PORT || 5000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:3000";
+const PORT = 5000;
 
 // Enable CORS
 app.use(
