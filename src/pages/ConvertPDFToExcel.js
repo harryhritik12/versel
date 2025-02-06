@@ -23,7 +23,7 @@ const ConvertPDFToExcel = () => {
 
     try {
       const response = await axios.post(
-        "https://versel-rxs2.onrender.com//convert-to-excel",
+        "https://versel-rxs2.onrender.com/convert-to-excel",
         formData,
         { responseType: "blob" }
       );
