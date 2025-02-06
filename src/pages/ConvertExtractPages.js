@@ -30,7 +30,7 @@ const ConvertExtractPages = () => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
+      const response = await axios.post('https://versel-rxs2.onrender.com/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setExtractedFiles(response.data.extractedFiles);
@@ -57,7 +57,7 @@ const ConvertExtractPages = () => {
       if (file) {
         setTimeout(() => {
           const link = document.createElement('a');
-          link.href = `http://localhost:5000/download/${encodeURIComponent(file.relativePath)}`;
+          link.href = `https://versel-rxs2.onrender.com/download/${encodeURIComponent(file.relativePath)}`;
           link.setAttribute('download', fileName);
           document.body.appendChild(link);
           link.click();
@@ -85,7 +85,7 @@ const ConvertExtractPages = () => {
         }
   
         // Fetch file content
-        const response = await fetch(`http://localhost:5000/download/${encodeURIComponent(file.relativePath)}`);
+        const response = await fetch(`https://versel-rxs2.onrender.com//download/${encodeURIComponent(file.relativePath)}`);
         const blob = await response.blob();
         
         // Create file in the appropriate directory

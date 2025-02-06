@@ -15,7 +15,7 @@ const ConvertWordToPDF = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post("http://localhost:5000/convert", formData, {
+      const response = await axios.post("https://versel-rxs2.onrender.com/convert", formData, {
         responseType: "blob",
         headers: { "Content-Type": "multipart/form-data" },
       });

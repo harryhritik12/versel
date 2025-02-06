@@ -34,7 +34,7 @@ const UnlockPDF = () => {
 
     try {
       // Send the PDF and password to the backend to unlock it
-      const response = await axios.post("http://localhost:5000/unlock-pdf", formData, {
+      const response = await axios.post("https://versel-rxs2.onrender.com/unlock-pdf", formData, {
         responseType: "blob",
       });
 

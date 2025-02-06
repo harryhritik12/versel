@@ -27,7 +27,7 @@ const ProtectPDF = () => {
     formData.append("password", password);
 
     try {
-      const response = await axios.post("http://localhost:5000/protect-pdf", formData, {
+      const response = await axios.post("https://versel-rxs2.onrender.com/protect-pdf", formData, {
         responseType: "blob", // To handle binary file response
       });
 
