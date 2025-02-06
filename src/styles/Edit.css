@@ -1,0 +1,58 @@
+.edit-pdf-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-pdf-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.user-info, .note, .experience, .recorder {
+    margin-bottom: 20px;
+}
+
+.user-info h2, .note h3, .experience h3, .recorder h3 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+ul li {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.note p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.edit-pdf-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-pdf-button:hover {
+    background-color: #0056b3;
+}
