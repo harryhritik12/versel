@@ -28,7 +28,7 @@ const ConvertPDFToWord = () => {
             const formData = new FormData();
             formData.append("file", selectedFiles[0]); // Handle the first file for simplicity
 
-            const response = await axios.post("https://versel-rxs2.onrender.com/convert-pdf-to-word", formData, {
+            const response = await axios.post("https://docker-lv55.onrender.com/convert-pdf-to-word", formData, {
                 responseType: "blob", // Receive the file as a Blob
             });
 

@@ -20,7 +20,7 @@ const ConvertMergePDF = () => {
         const formData = new FormData();
         pdfFiles.forEach((file) => formData.append("files", file));
 
-        const response = await axios.post("https://versel-rxs2.onrender.com/upload", formData);
+        const response = await axios.post("https://docker-lv55.onrender.com/upload", formData);
         setThumbnails(response.data.thumbnails);
       } catch (error) {
         console.error("Error fetching thumbnails:", error);

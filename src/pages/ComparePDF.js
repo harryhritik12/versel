@@ -52,7 +52,7 @@ const ComparePDF = () => {
       formData.append("pdfs", selectedFiles[1]);
 
       try {
-        const response = await fetch("https://versel-rxs2.onrender.com/compare", {
+        const response = await fetch("https://docker-lv55.onrender.com/compare", {
           method: "POST",
           body: formData,
         });
