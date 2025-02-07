@@ -78,38 +78,52 @@ app.post("/convert-to-excel", upload.single("file"), async (req, res) => {
   try {
     const pdfBuffer = fs.readFileSync(pdfPath);
 
-    pdf2table.parse(pdfBuffer, (err, rows) => {
+    pdf2table.parse(pdfBuffer, async (err, rows) => {
       if (err) {
         console.error("Error parsing PDF:", err);
-        return res.status(500).send("Failed to convert PDF to Excel.");
+        return res.status(500).send("Failed to extract table data.");
       }
 
+      // Remove empty cells & incomplete rows
       const cleanedRows = rows
         .map((row) => row.filter((cell) => cell.trim() !== "")) // Remove empty cells
         .filter((row) => row.length > 1); // Remove incomplete rows
 
+      if (cleanedRows.length === 0) {
+        return res.status(400).send("No table data found in PDF.");
+      }
+
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("Sheet1");
 
-      worksheet.addRow(["First Name", "Last Name", "Gender", "Country", "Age", "Date", "Id"]); // Fix header
+      // Use the first row as the dynamic header
+      const headers = cleanedRows[0]; // First row contains headers
+      worksheet.addRow(headers);
 
-      cleanedRows.forEach((row) => {
-        if (row.length === 7) worksheet.addRow(row); // Ensure correct row length
-      });
+      // Add the remaining rows as data
+      cleanedRows.slice(1).forEach((row) => worksheet.addRow(row));
 
-      workbook.xlsx.writeBuffer().then((buffer) => {
+      try {
+        const buffer = await workbook.xlsx.writeBuffer();
+
         res.set({
           "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           "Content-Disposition": 'attachment; filename="converted.xlsx"',
         });
 
         res.send(buffer);
-        fs.unlinkSync(pdfPath);
-      });
+      } catch (excelError) {
+        console.error("Error generating Excel file:", excelError);
+        return res.status(500).send("Error creating Excel file.");
+      } finally {
+        fs.unlink(pdfPath, (unlinkErr) => {
+          if (unlinkErr) console.error("Failed to delete temp PDF:", unlinkErr);
+        });
+      }
     });
   } catch (error) {
     console.error("Error processing PDF:", error);
-    res.status(500).send("Failed to convert PDF to Excel.");
+    return res.status(500).send("Failed to convert PDF to Excel.");
   }
 });
 

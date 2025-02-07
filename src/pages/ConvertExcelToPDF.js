@@ -7,12 +7,15 @@ const ConvertExcelToPDF = () => {
   const location = useLocation();
   const selectedFiles = location.state?.files || [];
   const [pdfBlob, setPdfBlob] = useState(null);
+  const [isConverting, setIsConverting] = useState(false); // Track conversion progress
 
   const handleConvert = async () => {
     if (selectedFiles.length === 0) {
       alert("No files to convert.");
       return;
     }
+
+    setIsConverting(true); // Start conversion
 
     const formData = new FormData();
     formData.append("file", selectedFiles[0]); // Assuming single file for simplicity
@@ -27,6 +30,8 @@ const ConvertExcelToPDF = () => {
     } catch (error) {
       console.error("Error converting file:", error);
       alert("Failed to convert the file.");
+    } finally {
+      setIsConverting(false); // End conversion
     }
   };
 
@@ -58,8 +63,8 @@ const ConvertExcelToPDF = () => {
         <p>No files selected.</p>
       )}
       <div className="action-buttons">
-        <button className="convert-button" onClick={handleConvert}>
-          Convert to PDF
+        <button className="convert-button" onClick={handleConvert} disabled={isConverting}>
+          {isConverting ? "Converting..." : "Convert to PDF"}
         </button>
         <button className="download-button" onClick={handleDownload} disabled={!pdfBlob}>
           Download PDF
