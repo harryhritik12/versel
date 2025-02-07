@@ -7,9 +7,13 @@ const ConvertWordToPDF = () => {
   const location = useLocation();
   const selectedFiles = location.state?.files || [];
   const [convertedFiles, setConvertedFiles] = useState({});
+  const [convertingFiles, setConvertingFiles] = useState({}); // Track conversion progress
 
   const handleConvert = async (file) => {
     if (!file) return;
+
+    // Mark file as converting
+    setConvertingFiles((prev) => ({ ...prev, [file.name]: true }));
 
     try {
       const formData = new FormData();
@@ -26,6 +30,9 @@ const ConvertWordToPDF = () => {
     } catch (error) {
       console.error("Error during conversion:", error);
       alert(`Error converting ${file.name}: ` + error.message);
+    } finally {
+      // Remove file from converting state
+      setConvertingFiles((prev) => ({ ...prev, [file.name]: false }));
     }
   };
 
@@ -52,9 +59,9 @@ const ConvertWordToPDF = () => {
                 <button
                   className="convert-button"
                   onClick={() => handleConvert(file)}
-                  disabled={!!convertedFiles[file.name]}
+                  disabled={!!convertedFiles[file.name] || convertingFiles[file.name]}
                 >
-                  Convert to PDF
+                  {convertingFiles[file.name] ? "Converting..." : "Convert to PDF"}
                 </button>
                 <button
                   className="download-button"
