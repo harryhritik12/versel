@@ -13,10 +13,10 @@ RUN npm install
 # ====== Stage 2: Build React Frontend ======
 FROM base AS frontend-build
 
-# Copy frontend source files
-COPY src ./src
+# Copy frontend source files (excluding backend)
+COPY . . 
 
-# Build the frontend
+# Run the frontend build
 RUN npm run build
 
 # ====== Stage 3: Setup Backend (Node.js & Python) ======
@@ -30,15 +30,18 @@ RUN apt-get update && apt-get install -y \
 # Install required Python dependencies
 RUN pip install pdfplumber python-docx pymupdf pdf2docx
 
-# Copy all source files (including backend)
-COPY . .
+# Set working directory to backend
+WORKDIR /app/backend
 
-# Ensure React frontend build is available in backend
-RUN mv src/build backend/build
+# Copy only backend source files
+COPY backend ./ 
+
+# Ensure frontend build is available inside backend
+COPY --from=frontend-build /app/build ./build
 
 # Expose ports
 EXPOSE 5000
 EXPOSE 3000
 
 # Start the backend server
-CMD ["node", "backend/server.js"]
+CMD ["node", "server.js"]
