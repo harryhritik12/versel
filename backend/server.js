@@ -120,7 +120,7 @@ app.post("/convert-to-excel", upload.single("file"), async (req, res) => {
 const convertToPDF = (inputFile, outputDir) => {
   return new Promise((resolve, reject) => {
     const sofficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";
-    const command = `"${sofficePath}" --headless --convert-to pdf --outdir "${outputDir}" --infilter="Calc:calc8" --print-to-file --printer-name --nologo --nolockcheck --invisible "${inputFile}"`;
+    const command = `libreoffice --headless --convert-to pdf --outdir "${outputDir}" "${inputFile}"`;
 
     exec(command, (err, stdout, stderr) => {
       if (err || stderr) {
