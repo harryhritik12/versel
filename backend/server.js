@@ -293,7 +293,8 @@ app.post("/convert-pdf-to-word", upload.single("file"), (req, res) => {
   const outputPath = `${pdfPath}.docx`; // Output file path
 
   const scriptPath = path.join(__dirname, "convert_pdf_to_doc.py");
-  const command = `python ${scriptPath} "${pdfPath}" "${outputPath}"`;
+  const command = `python3 ${scriptPath} "${pdfPath}" "${outputPath}"`;
+
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
