@@ -15,7 +15,7 @@ const PORT = 5000;
 // Enable CORS
 app.use(
   cors({
-    origin: "https://versel-2.onrender.com",
+    origin: ["https://versel-2.onrender.com", "https://versel21.vercel.app"],
     credentials: true,
   })
 );
